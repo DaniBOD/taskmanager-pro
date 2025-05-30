@@ -1,0 +1,28 @@
+<h2>Agregar Nueva Tarea</h2>
+
+<form [formGroup]="form" (ngSubmit)="crearTarea()">
+  <label>Título:</label>
+  <input formControlName="titulo" />
+  <div *ngIf="form.get('titulo')?.invalid && form.get('titulo')?.touched">
+    Título requerido (mínimo 3 caracteres).
+  </div>
+
+  <label>Descripción:</label>
+  <textarea formControlName="descripcion"></textarea>
+  <div *ngIf="form.get('descripcion')?.invalid && form.get('descripcion')?.touched">
+    Descripción requerida.
+  </div>
+
+  <label>Prioridad:</label>
+  <select formControlName="prioridad">
+    <option *ngFor="let p of prioridades" [value]="p">{{ p }}</option>
+  </select>
+
+  <label>Fecha de Vencimiento:</label>
+  <input type="date" formControlName="fechaVencimiento" />
+  <div *ngIf="form.get('fechaVencimiento')?.invalid && form.get('fechaVencimiento')?.touched">
+    Fecha válida requerida.
+  </div>
+
+  <button type="submit">Crear Tarea</button>
+</form>
