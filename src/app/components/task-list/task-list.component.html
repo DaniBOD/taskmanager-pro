@@ -1,1 +1,13 @@
-<p>task-list works!</p>
+<h2>Lista de Tareas</h2>
+
+<div *ngIf="tareas.length === 0">
+  No hay tareas registradas.
+</div>
+
+<ul>
+  <li *ngFor="let tarea of tareas">
+    <strong>{{ tarea.titulo }}</strong> - {{ tarea.descripcion }}<br />
+    Estado: {{ tarea.estado }} | Prioridad: {{ tarea.prioridad }}<br />
+    Vence: {{ tarea.fechaVencimiento | date }}
+  </li>
+</ul>

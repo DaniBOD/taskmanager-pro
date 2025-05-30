@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TaskPriority, TaskStatus, Task } from '../../models/task.model';
+import { TaskPriority, Task, TaskStatus } from '../../models/task.model';
+import { TaskService } from '../../services/task.service';
 
 @Component({
   selector: 'app-task-form',
@@ -14,7 +15,7 @@ export class TaskFormComponent {
   form: FormGroup;
   prioridades: TaskPriority[] = ['alta', 'media', 'baja'];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private taskService: TaskService) {
     this.form = this.fb.group({
       titulo: ['', [Validators.required, Validators.minLength(3)]],
       descripcion: ['', [Validators.required]],
@@ -35,11 +36,12 @@ export class TaskFormComponent {
         fechaVencimiento: new Date(this.form.value.fechaVencimiento)
       };
 
-      console.log('Tarea creada localmente:', nuevaTarea);
-      alert('Tarea creada (solo en frontend). Ver consola.');
+      this.taskService.agregarTarea(nuevaTarea);
+      alert('Tarea creada (solo en frontend)');
       this.form.reset();
     } else {
       this.form.markAllAsTouched();
     }
   }
 }
+
