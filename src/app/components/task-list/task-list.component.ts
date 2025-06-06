@@ -20,4 +20,11 @@ export class TaskListComponent implements OnInit {
       this.tareas = data;
     });
   }
+
+  eliminarTarea(id: number) {
+    const confirmar = confirm('¿Estás seguro de eliminar esta tarea?');
+    if (confirmar) {
+      this.taskService.eliminarTarea(id);
+    }
+  }
 }
