@@ -25,9 +25,10 @@ export class TaskService {
 
   actualizarTarea(tareaActualizada: Task) {
     const index = this.tareas.findIndex(t => t.id === tareaActualizada.id);
-    if (index > -1) {
-      this.tareas[index] = tareaActualizada;
-      this.tareasSubject.next(this.tareas);
+    if (index !== -1) {
+      this.tareas[index] = { ...tareaActualizada };
+      this.tareasSubject.next([...this.tareas]);
     }
   }
 }
+
