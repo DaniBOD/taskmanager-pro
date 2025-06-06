@@ -8,6 +8,7 @@
   <li *ngFor="let tarea of tareas">
     <strong>{{ tarea.titulo }}</strong> - {{ tarea.descripcion }}<br />
     Estado: {{ tarea.estado }} | Prioridad: {{ tarea.prioridad }}<br />
-    Vence: {{ tarea.fechaVencimiento | date }}
+    Vence: {{ tarea.fechaVencimiento | date }}<br />
+    <button (click)="eliminarTarea(tarea.id)">Eliminar</button>
   </li>
 </ul>
