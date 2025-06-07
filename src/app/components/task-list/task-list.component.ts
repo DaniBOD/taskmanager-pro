@@ -47,4 +47,8 @@ export class TaskListComponent implements OnInit {
       this.tareaEditando = null;
     }
   }
+  toggleEstado(tarea: Task): void {
+  tarea.estado = tarea.estado === 'completada' ? 'pendiente' : 'completada';
+  this.taskService.actualizarEstado(tarea.id, tarea.estado);
+  }
 }
