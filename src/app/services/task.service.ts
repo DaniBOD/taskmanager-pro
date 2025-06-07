@@ -30,5 +30,11 @@ export class TaskService {
       this.tareasSubject.next([...this.tareas]);
     }
   }
+  actualizarEstado(id: number, nuevoEstado: 'completada' | 'pendiente'): void {
+  const tarea = this.tareas.find(t => t.id === id);
+  if (tarea) {
+    tarea.estado = nuevoEstado;
+   }
+  }
 }
 
