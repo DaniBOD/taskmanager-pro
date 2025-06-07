@@ -7,28 +7,38 @@
 <ul>
   <li *ngFor="let tarea of tareas">
     <!-- Vista normal -->
-    <div *ngIf="tareaEditando?.id !== tarea.id">
-      <strong>{{ tarea.titulo }}</strong> - {{ tarea.descripcion }}<br />
-      Estado: {{ tarea.estado }} | Prioridad: {{ tarea.prioridad }}<br />
+    <div *ngIf="tarea.id !== tareaEditandoId">
+      <strong [ngClass]="{ 'completada': tarea.estado === 'completada' }">{{ tarea.titulo }}</strong>
+      - {{ tarea.descripcion }}<br />
+      Estado: {{ tarea.estado }} |
+      Prioridad: {{ tarea.prioridad }}<br />
       Vence: {{ tarea.fechaVencimiento | date }}<br />
-      <button (click)="iniciarEdicion(tarea)">Editar</button>
+      
+      <button (click)="toggleEstado(tarea)">Marcar como {{ tarea.estado === 'completada' ? 'pendiente' : 'completada' }}</button>
+      <button (click)="iniciarEdicion(tarea.id)">Editar</button>
       <button (click)="eliminarTarea(tarea.id)">Eliminar</button>
     </div>
 
     <!-- Vista de edición -->
-    <div *ngIf="tareaEditando?.id === tarea.id">
-      <input [(ngModel)]="tareaEditando.titulo" placeholder="Título" />
-      <input [(ngModel)]="tareaEditando.descripcion" placeholder="Descripción" />
-      <select [(ngModel)]="tareaEditando.prioridad">
+    <div *ngIf="tarea.id === tareaEditandoId">
+      <input [(ngModel)]="formEdit.titulo" placeholder="Título" />
+      <input [(ngModel)]="formEdit.descripcion" placeholder="Descripción" />
+      <select [(ngModel)]="formEdit.prioridad">
         <option value="alta">Alta</option>
         <option value="media">Media</option>
         <option value="baja">Baja</option>
       </select>
-      <input type="date" [(ngModel)]="tareaEditando.fechaVencimiento" />
+      <input type="date" [(ngModel)]="formEdit.fechaVencimiento" />
       <br />
-      <button (click)="guardarEdicion()">Guardar</button>
+      <button (click)="guardarEdicion(tarea.id)">Guardar</button>
       <button (click)="cancelarEdicion()">Cancelar</button>
     </div>
   </li>
 </ul>
 
+<style>
+  .completada {
+    text-decoration: line-through;
+    color: gray;
+  }
+</style>
