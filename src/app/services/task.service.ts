@@ -23,13 +23,16 @@ export class TaskService {
     this.tareasSubject.next(this.tareas);
   }
 
-  actualizarTarea(tareaActualizada: Task) {
-    const index = this.tareas.findIndex(t => t.id === tareaActualizada.id);
-    if (index !== -1) {
-      this.tareas[index] = { ...tareaActualizada };
-      this.tareasSubject.next([...this.tareas]);
-    }
+actualizarTarea(id: number, tareaActualizada: Partial<Task>) {
+  const index = this.tareas.findIndex(t => t.id === id);
+  if (index !== -1) {
+    this.tareas[index] = {
+      ...this.tareas[index],
+      ...tareaActualizada
+    };
+    this.tareasSubject.next([...this.tareas]);
   }
+ }
   actualizarEstado(id: number, nuevoEstado: 'completada' | 'pendiente'): void {
   const tarea = this.tareas.find(t => t.id === id);
   if (tarea) {
