@@ -1,59 +1,65 @@
-# TaskmanagerPro
+# TaskManager Pro
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.9.
+**TaskManager Pro** es una aplicación frontend desarrollada con Angular 17 utilizando componentes standalone. Fue creada como parte del desafío técnico para TechNova Solutions.
 
-## Development server
+La app permite gestionar tareas de forma simple: agregarlas, marcarlas como completadas/incompletas y filtrarlas según su estado. **Este proyecto no se conecta a un backend**; toda la lógica se ejecuta en el navegador.
 
-To start a local development server, run:
+> ⚠️ Por error inicial, el trabajo se estaba realizando en la rama incorrecta. La rama principal activa fue cambiada y ahora es `feature/main-project`, donde se encuentran todos los commits y avances del desarrollo.
 
-```bash
-ng serve
-```
+---
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## 🚀 Funcionalidades implementadas
 
-## Code scaffolding
+- ✅ Crear tareas nuevas
+- ✅ Editar y eliminar tareas existentes
+- ✅ Marcar tareas como completadas o pendientes
+- ✅ Filtros por estado: todas, completadas, pendientes
+- ✅ Diseño responsivo y limpio usando CSS clásico
+- ✅ Uso de Angular 17 con componentes standalone
+- ✅ Proyecto contenedorizado usando Docker + NGINX
+- ✅ 10+ commits con buenas prácticas en la rama `feature/*`
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+---
 
-```bash
-ng generate component component-name
-```
+## 📁 Estructura del proyecto
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+taskmanager-pro/
+├── src/
+│ ├── app/
+│ │ ├── components/
+│ │ │ ├── task-form/
+│ │ │ ├── task-list/
+│ │ │ └── ...
+│ │ └── app.config.ts
+├── Dockerfile
+├── angular.json
+└── README.md
 
-```bash
-ng generate --help
-```
 
-## Building
+🐳 Docker
+Este proyecto puede ejecutarse como una app de producción usando NGINX.
 
-To build the project run:
+Build de la imagen
 
-```bash
-ng build
-```
+docker build -t taskmanager-pro .
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+docker run -d -p 8080:80 taskmanager-pro
 
-## Running unit tests
+Luego abre http://localhost:8080 para ver la aplicación ejecutándose.
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+Nota: Asegúrate de que el puerto 8080 no esté siendo usado por otro servicio.
 
-```bash
-ng test
-```
+sino use docker build -t taskmanager-pro .
 
-## Running end-to-end tests
+docker run -d -p 4201:80 taskmanager-pro
 
-For end-to-end (e2e) testing, run:
+Accede a http://localhost:4201
 
-```bash
-ng e2e
-```
+Grupo de Daniel Pilquil Jose Herrera y Christopher Muñoz
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+ Notas adicionales
+El proyecto utiliza Angular 17 con configuración de componentes standalone (sin módulos tradicionales).
 
-## Additional Resources
+Se tomaron medidas manuales para corregir un conflicto con el favicon.ico al compilar en dist/.
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+El archivo angular.json fue ajustado para asegurar que los assets estén disponibles en producción.
