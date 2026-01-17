@@ -1,11 +1,31 @@
 <h2>Lista de Tareas</h2>
 
-<div *ngIf="tareas.length === 0">
+<!-- Filtros -->
+<div class="task-filter">
+  <button
+    [ngClass]="{ active: filtroSeleccionado === 'todas' }"
+    (click)="cambiarFiltro('todas')">
+    Todas
+  </button>
+  <button
+    [ngClass]="{ active: filtroSeleccionado === 'completadas' }"
+    (click)="cambiarFiltro('completadas')">
+    Completadas
+  </button>
+  <button
+    [ngClass]="{ active: filtroSeleccionado === 'pendientes' }"
+    (click)="cambiarFiltro('pendientes')">
+    Pendientes
+  </button>
+</div>
+
+<!-- Lista -->
+<div *ngIf="obtenerTareasFiltradas().length === 0">
   No hay tareas registradas.
 </div>
 
 <ul>
-  <li *ngFor="let tarea of tareas">
+  <li *ngFor="let tarea of obtenerTareasFiltradas()">
     <!-- Vista normal -->
     <div *ngIf="tarea.id !== tareaEditandoId">
       <strong [ngClass]="{ 'completada': tarea.estado === 'completada' }">{{ tarea.titulo }}</strong>
@@ -14,31 +34,60 @@
       Prioridad: {{ tarea.prioridad }}<br />
       Vence: {{ tarea.fechaVencimiento | date }}<br />
       
-      <button (click)="toggleEstado(tarea)">Marcar como {{ tarea.estado === 'completada' ? 'pendiente' : 'completada' }}</button>
+      <button (click)="toggleEstado(tarea)">
+        Marcar como {{ tarea.estado === 'completada' ? 'pendiente' : 'completada' }}
+      </button>
       <button (click)="iniciarEdicion(tarea.id)">Editar</button>
       <button (click)="eliminarTarea(tarea.id)">Eliminar</button>
     </div>
 
-    <!-- Vista de edición -->
+    <!-- Vista edición con validación -->
     <div *ngIf="tarea.id === tareaEditandoId">
-      <input [(ngModel)]="formEdit.titulo" placeholder="Título" />
+      <input
+        [(ngModel)]="formEdit.titulo"
+        placeholder="Título"
+        required
+        minlength="3"
+        #titulo="ngModel"
+      />
+      <div *ngIf="titulo.invalid && titulo.touched" class="error">
+        El título es obligatorio y debe tener al menos 3 caracteres.
+      </div>
+
       <input [(ngModel)]="formEdit.descripcion" placeholder="Descripción" />
-      <select [(ngModel)]="formEdit.prioridad">
+
+      <select
+        [(ngModel)]="formEdit.prioridad"
+        required
+        #prioridad="ngModel"
+      >
+        <option value="">Seleccione prioridad</option>
         <option value="alta">Alta</option>
         <option value="media">Media</option>
         <option value="baja">Baja</option>
       </select>
-      <input type="date" [(ngModel)]="formEdit.fechaVencimiento" />
+      <div *ngIf="prioridad.invalid && prioridad.touched" class="error">
+        Debe seleccionar una prioridad.
+      </div>
+
+      <input
+        type="date"
+        [(ngModel)]="formEdit.fechaVencimiento"
+        required
+        #fecha="ngModel"
+      />
+      <div *ngIf="fecha.invalid && fecha.touched" class="error">
+        Debe ingresar una fecha válida.
+      </div>
+
       <br />
-      <button (click)="guardarEdicion(tarea.id)">Guardar</button>
+      <button
+        (click)="guardarEdicion(tarea.id)"
+        [disabled]="titulo.invalid || prioridad.invalid || fecha.invalid"
+      >
+        Guardar
+      </button>
       <button (click)="cancelarEdicion()">Cancelar</button>
     </div>
   </li>
 </ul>
-
-<style>
-  .completada {
-    text-decoration: line-through;
-    color: gray;
-  }
-</style>

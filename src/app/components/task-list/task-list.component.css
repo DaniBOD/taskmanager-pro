@@ -17,4 +17,24 @@ button {
   border: none;
   padding: 5px 10px;
   cursor: pointer;
+  margin-right: 5px;
+}
+
+button.active {
+  background-color: #3498db;
+}
+
+.completada {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.task-filter {
+  margin-bottom: 10px;
+}
+
+.error {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 4px;
 }
